@@ -35,11 +35,10 @@ function App() {
      </Container>
 
       <Routes>
-        <Route path='/' element={<BlogPage />}>
+        <Route path='/' element={<BlogPage />}/>
           <Route path='/Login' element={<Login />} />
           <Route path='/CreateAccount' element={<CreateAccount />} />
-          <Route path='/Dashboard' element={<Dashboard />} />
-        </Route>
+          <Route path='/DashBoard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

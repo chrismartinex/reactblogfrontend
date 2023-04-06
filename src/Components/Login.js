@@ -1,16 +1,28 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Button, Form } from "react-bootstrap";
+import { login, GetLoggedInUserData,} from '../Services/DataService';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  let navigate = useNavigate();
+  
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let userData = {
       Username,
       Password,
     };
     console.log(userData);
+    let token = await login(userData);
+    if(token.token != null){
+      localStorage.setItem("Token", token.token);
+      await GetLoggedInUserData(Username);
+      navigate("/Dashboard");
+    }
+
+
   };
 
   return (
@@ -42,14 +54,13 @@ export default function Login() {
 
             <Button
               variant='primary'
-              type='submit'
               onClick={handleSubmit}
             >
               Login
             </Button>
           </Form>
           <h4>Don't Have an account?</h4>
-          <Button>Create Account</Button>
+          <Button  onClick={() => navigate('/createAccount')} >Create Account</Button>
         </Col>
       </Row>
     </Container>
